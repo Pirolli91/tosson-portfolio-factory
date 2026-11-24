@@ -1,0 +1,6 @@
+Senior Data Analyst Job Description
+Required Skills:
+- Strong SQL and Python data modeling experience
+- Experience with dbt and Apache Airflow orchestration
+- Power BI dashboarding and DAX semantic modeling
+- Experience with Kubernetes, Terraform, and EDI X12 healthcare data preferred

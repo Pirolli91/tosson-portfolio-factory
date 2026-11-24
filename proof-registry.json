@@ -1,0 +1,460 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-11-24T00:32:30Z",
+  "owner": "Temitope Soneye",
+  "legal_entity": "Tosson Services LLC dba Tosson Environmental Analytics",
+  "entries": [
+    {
+      "artifact_id": "a1-epa-ucmr5-nc-ingest",
+      "kind": "report",
+      "title": "Repeatable EPA UCMR 5 North Carolina Occurrence Ingest & SDWIS County Enrichment",
+      "repo_path": "portfolio-factory/ingest/ingest_ucmr5.py",
+      "evidence": {
+        "command": ".venv/bin/python portfolio-factory/ingest/ingest_ucmr5.py",
+        "result": "PASS (source_nc_rows=68633, loaded_nc_rows=68633, reconciled=True, mapped_pwsids=291/291, unmapped_pwsids=0)",
+        "timestamp": "2026-11-24T00:20:26Z",
+        "metrics": {
+          "source_nc_rows": 68633,
+          "loaded_nc_rows": 68633,
+          "reconciled": true,
+          "distinct_pwsids": 291,
+          "mapped_pwsids": 291,
+          "unmapped_pwsids": 0,
+          "source_file_sha256": "313c88a247ab41c7e0c5da9487241a96f1cb03418c79db50261d6e4e74158f2a",
+          "county_file_sha256": "65fa9972a578e0e19d137a694f9f567b604d07d6189e3fca400b93c154b2a138"
+        }
+      },
+      "supports_claims": [
+        "Built repeatable Python + DuckDB ingestion pipeline for public EPA UCMR 5 North Carolina occurrence data with SHA-256 checksums and exact row reconciliation",
+        "Integrated public EPA SDWIS NC water system geography into DuckDB with explicit UNMAPPED_COUNTY handling",
+        "Python",
+        "DuckDB",
+        "Data Quality & Validation",
+        "EPA UCMR 5 / PFAS Analytics"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.epa.gov/system/files/other-files/2023-08/ucmr5-occurrence-data.zip",
+        "https://data.epa.gov/efservice/GEOGRAPHIC_AREA/PRIMACY_AGENCY_CODE/NC/PWS_TYPE_CODE/CWS/CSV",
+        "https://data.epa.gov/efservice/GEOGRAPHIC_AREA/PRIMACY_AGENCY_CODE/NC/PWS_TYPE_CODE/NTNCWS/CSV"
+      ]
+    },
+    {
+      "artifact_id": "a2-dbt-mart-analyte-summary",
+      "kind": "dbt_model",
+      "title": "NC Analyte Occurrence & 2024 MCL Screening Summary dbt Mart (mart_analyte_summary)",
+      "repo_path": "portfolio-factory/pfas_warehouse/models/marts/mart_analyte_summary.sql",
+      "evidence": {
+        "command": "PFAS_DUCKDB_PATH=portfolio-factory/warehouse/pfas_ucmr5.duckdb .venv/bin/dbt build --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse && .venv/bin/dbt docs generate --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse",
+        "result": "PASS (30 analytes: 29 PFAS + lithium; P50/P90/max ppt & benchmark ratios reconciled)",
+        "timestamp": "2026-11-24T00:23:04Z",
+        "metrics": {
+          "analytes": 30,
+          "reconciled_rows": 68633,
+          "dbt_pass": 59,
+          "dbt_errors": 0
+        }
+      },
+      "supports_claims": [
+        "Modeled per-analyte PFAS percentile distributions (P50/P90/max) and 2024 EPA MCL screening benchmark ratios in dbt",
+        "dbt",
+        "SQL",
+        "EPA UCMR 5 / PFAS Analytics"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a2-dbt-mart-county-scorecard",
+      "kind": "dbt_model",
+      "title": "NC County PFAS Screening Scorecard dbt Mart (mart_county_scorecard)",
+      "repo_path": "portfolio-factory/pfas_warehouse/models/marts/mart_county_scorecard.sql",
+      "evidence": {
+        "command": "PFAS_DUCKDB_PATH=portfolio-factory/warehouse/pfas_ucmr5.duckdb .venv/bin/dbt build --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse && .venv/bin/dbt docs generate --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse",
+        "result": "PASS (1 seed, 8 models, 50 tests, 0 errors; 92 NC counties, 68,633 reconciled rows)",
+        "timestamp": "2026-11-24T00:23:04Z",
+        "metrics": {
+          "counties": 92,
+          "reconciled_rows": 68633,
+          "dbt_pass": 59,
+          "dbt_errors": 0
+        }
+      },
+      "supports_claims": [
+        "Built and tested a multi-layer dbt-core + DuckDB data warehouse on public EPA UCMR 5 North Carolina PFAS data",
+        "Authored dbt staging, intermediate, and mart models with 50 schema and singular data tests passing",
+        "Generated dbt lineage and documentation artifacts (manifest.json, catalog.json, index.html)",
+        "dbt",
+        "SQL",
+        "DuckDB",
+        "Data Quality & Validation",
+        "EPA UCMR 5 / PFAS Analytics"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a2-dbt-mart-system-screening",
+      "kind": "dbt_model",
+      "title": "NC Public Water System Screening & Hazard Index dbt Mart (mart_system_screening)",
+      "repo_path": "portfolio-factory/pfas_warehouse/models/marts/mart_system_screening.sql",
+      "evidence": {
+        "command": "PFAS_DUCKDB_PATH=portfolio-factory/warehouse/pfas_ucmr5.duckdb .venv/bin/dbt build --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse && .venv/bin/dbt docs generate --project-dir portfolio-factory/pfas_warehouse --profiles-dir portfolio-factory/pfas_warehouse",
+        "result": "PASS (291 NC public water systems; all 6 EPA 2024 PFAS MCL & Hazard Index 1.0 benchmarks screened)",
+        "timestamp": "2026-11-24T00:23:04Z",
+        "metrics": {
+          "systems": 291,
+          "systems_above_any_2024_benchmark": 117,
+          "reconciled_rows": 68633
+        }
+      },
+      "supports_claims": [
+        "Implemented all six 2024 EPA PFAS MCL and 4-PFAS mixture Hazard Index screening benchmarks in dbt-core + DuckDB",
+        "dbt",
+        "SQL",
+        "DuckDB",
+        "EPA UCMR 5 / PFAS Analytics"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a3-airflow-pfas-pipeline",
+      "kind": "dag",
+      "title": "Apache Airflow 3.4.0 LocalExecutor PFAS Pipeline DAG (Clean Run + Prior-Period Backfill)",
+      "repo_path": "portfolio-factory/dags/pfas_pipeline.py",
+      "evidence": {
+        "command": "AIRFLOW_HOME=/home/antigravity/.airflow_home AIRFLOW__CORE__EXECUTOR=LocalExecutor .venv-airflow/bin/airflow dags test pfas_ucmr5_pipeline 2026-11-01 && .venv-airflow/bin/airflow backfill create --dag-id pfas_ucmr5_pipeline --from-date 2025-10-01 --to-date 2025-10-01",
+        "result": "PASS (clean run manual__2026-11-01=success, backfill__2025-10-01=success under LocalExecutor; 0 import errors; 50/50 dbt tests green; fail-closed gate verified)",
+        "timestamp": "2026-11-24T00:32:30Z",
+        "metrics": {
+          "airflow_version": "3.4.0",
+          "executor": "LocalExecutor",
+          "clean_run_logical_date": "2026-11-01",
+          "backfill_logical_date": "2025-10-01",
+          "reconciled_rows": 68633,
+          "dbt_tests_passed": 50,
+          "import_errors": 0
+        }
+      },
+      "supports_claims": [
+        "Built and executed an Apache Airflow 3.4.0 TaskFlow DAG (LocalExecutor) orchestrating EPA UCMR 5 ingest, dbt run, dbt test fail-closed gate, and summary publication with clean run and prior-period backfill",
+        "Apache Airflow",
+        "dbt",
+        "Python",
+        "Data Quality & Validation"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation"
+      ]
+    },
+    {
+      "artifact_id": "a4a-advanced-sql-pack",
+      "kind": "sql_pack",
+      "title": "10 Advanced Analytical SQL Patterns Verified Against DuckDB UCMR 5 Marts",
+      "repo_path": "portfolio-factory/sql/run_sql_pack.py",
+      "evidence": {
+        "command": ".venv/bin/python portfolio-factory/sql/run_sql_pack.py",
+        "result": "PASS (10/10 SQL patterns executed and verified non-empty against DuckDB marts)",
+        "timestamp": "2026-11-24T00:24:12Z",
+        "metrics": {
+          "queries_executed": 10,
+          "query_row_counts": {
+            "01_county_ranking_windows.sql": 92,
+            "02_sampling_gaps_and_islands.sql": 50,
+            "03_rolling_quarterly_trend.sql": 14,
+            "04_incremental_merge_upsert.sql": 1,
+            "05_hazard_index_mixture_cohort.sql": 30,
+            "06_analyte_pivot_conditional_agg.sql": 30,
+            "07_outlier_iqr_zscore_screening.sql": 30,
+            "08_yoy_detection_rate_delta.sql": 4,
+            "09_system_size_pareto_share.sql": 45,
+            "10_data_quality_reconciliation.sql": 1
+          }
+        }
+      },
+      "supports_claims": [
+        "Authored and executed 10 advanced SQL patterns (window functions, gaps-and-islands, rolling frames, incremental MERGE upsert, IQR/z-score outliers, YoY deltas, Pareto cumulative share, reconciliation) on DuckDB",
+        "SQL",
+        "DuckDB",
+        "Data Quality & Validation"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation"
+      ]
+    },
+    {
+      "artifact_id": "a4b-snowflake-dialect-pack",
+      "kind": "sql_pack",
+      "title": "Snowflake-Dialect SQL Mart Translations & Stage/COPY/MERGE Load Pack (Dialect-Only)",
+      "repo_path": "portfolio-factory/snowflake/README.md",
+      "evidence": {
+        "command": "Static syntax & dialect-label verification across 4 Snowflake-dialect SQL files (dialect-only; not executed against a Snowflake account)",
+        "result": "PASS (4 Snowflake-dialect SQL files validated and labelled dialect-only)",
+        "timestamp": "2026-11-24T00:23:04Z",
+        "metrics": {
+          "sql_files": 4,
+          "executed_against_snowflake": false
+        }
+      },
+      "supports_claims": [
+        "Snowflake-dialect SQL (dialect-only; unexecuted)",
+        "Snowflake-dialect SQL",
+        "Translated dbt mart transformations and incremental COPY INTO / MERGE load patterns into Snowflake-dialect SQL (dialect-only; unexecuted)"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a4c-powerbi-dax-semantic-model",
+      "kind": "dax_library",
+      "title": "Power BI DAX Measure Library & Star-Schema Semantic Model Specification (No .pbix)",
+      "repo_path": "portfolio-factory/powerbi/measures.dax",
+      "evidence": {
+        "command": "Static validation of measures.dax, semantic_model.md, and model_spec.json (no .pbix in Sprint 5)",
+        "result": "PASS (20 DAX measures across 6 display folders; 5-table star schema & 4 single-direction relationships specified)",
+        "timestamp": "2026-11-24T00:23:04Z",
+        "metrics": {
+          "dax_measures": 20,
+          "tables": 5,
+          "relationships": 4,
+          "pbix_included": false
+        }
+      },
+      "supports_claims": [
+        "Power BI (DAX measure library and star-schema semantic model specification; no .pbix in Sprint 5)",
+        "Power BI",
+        "Authored Power BI DAX measures for screening rates, benchmark ratios, Hazard Index, YoY deltas, and county rankings"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a4d-pfas-html-dashboard",
+      "kind": "dashboard",
+      "title": "Interactive North Carolina EPA UCMR 5 PFAS Screening HTML Dashboard",
+      "repo_path": "portfolio-factory/dashboard/index.html",
+      "evidence": {
+        "command": ".venv/bin/python portfolio-factory/dashboard/build_dashboard.py",
+        "result": "PASS (self-contained HTML dashboard generated: 92 counties, 291 systems, 68633 reconciled results, zero external CDNs)",
+        "timestamp": "2026-11-24T00:25:11Z",
+        "metrics": {
+          "counties": 92,
+          "systems": 291,
+          "total_samples": 68633,
+          "html_bytes": 212153
+        }
+      },
+      "supports_claims": [
+        "Built an interactive self-contained HTML dashboard rendered directly from DuckDB dbt marts with county/analyte filters and inline SVG charts",
+        "BI Dashboards",
+        "DuckDB",
+        "EPA UCMR 5 / PFAS Analytics"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule",
+        "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+        "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule"
+      ]
+    },
+    {
+      "artifact_id": "a5-packet-claim-verifier",
+      "kind": "report",
+      "title": "Deterministic Packet Claim-Verifier with Honest-Candor Disavowal Awareness",
+      "repo_path": "portfolio-factory/verifier/verify_packet.py",
+      "evidence": {
+        "command": ".venv/bin/python portfolio-factory/verifier/verify_packet.py --packet <packet> --base-docs <base_resume> --registry proof-registry.json --strict",
+        "result": "PASS (evermore packet verified: 0 FORBIDDEN, 0 UNSUPPORTED, 5 PROVEN_BY_ARTIFACT, 10 IN_BASE_DOCS, 3 DISAVOWED_HONEST_GAP; synthetic planted unsupported & forbidden claims 100% caught)",
+        "timestamp": "2026-11-24T00:31:41Z",
+        "metrics": {
+          "evermore_forbidden": 0,
+          "evermore_unsupported": 0,
+          "evermore_proven_by_artifact": 5,
+          "evermore_in_base_docs": 10,
+          "evermore_disavowed_honest_gap": 3,
+          "synthetic_planted_catch_rate_pct": 100.0
+        }
+      },
+      "supports_claims": [
+        "Built deterministic job-application packet claim-verifier (.docx/.txt/.md) with negation/disavowal awareness and standing-rule forbidden-claim guards",
+        "Python",
+        "Data Quality & Validation"
+      ],
+      "source_urls": [
+        "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule"
+      ]
+    },
+    {
+      "artifact_id": "a6-jd-gap-analyser",
+      "kind": "report",
+      "title": "Live Official-Page JD Capture & Ranked Skill Gap Report",
+      "repo_path": "portfolio-factory/reports/jd_gap_report.md",
+      "evidence": {
+        "command": ".venv/bin/python portfolio-factory/gap_analyser/capture_seed_jds.py && .venv/bin/python portfolio-factory/gap_analyser/gap_report.py",
+        "result": "PASS (jds_total=3, OPEN=1, CLOSED=0, UNFETCHABLE_BOT_GATE=2, skills_evaluated=5, true_gaps=2)",
+        "timestamp": "2026-11-24T00:28:09Z",
+        "metrics": {
+          "total_unique_jd_skills": 5,
+          "covered_by_artifact": 3,
+          "covered_by_base_docs": 0,
+          "true_gaps": 2
+        }
+      },
+      "supports_claims": [
+        "Built automated JD gap analyser capturing live official career postings and scoring skill gaps against runnable portfolio proof",
+        "Python"
+      ],
+      "source_urls": [
+        "https://careers.bureauveritas.com/job/Senior-Sustainability-Consultant/214408-en_US/",
+        "https://jobs.centene.com/us/en/jobs/1672733-1/",
+        "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438"
+      ]
+    },
+    {
+      "artifact_id": "b1-manifest-roi-analyser",
+      "kind": "report",
+      "title": "B1 Manifest ROI Analyser (Liquidation.com & B-Stock)",
+      "repo_path": "auction-intel-v2/reports/sample_manifest_roi_report.md",
+      "evidence": {
+        "command": "PYTHONPATH=auction-intel-v2 .venv/bin/python -m manifest_roi --manifest tests/fixtures_synthetic/build_b/liquidation_com_sample.csv --out-md auction-intel-v2/reports/sample_manifest_roi_report.md --out-json auction-intel-v2/reports/sample_manifest_roi_report.json && .venv/bin/pytest tests/test_build_b_manifest_roi.py",
+        "result": "PASS (4 tests passed; sample lot LIQ-2026-101 landed=$500.00, net_resale=$792.00, net_profit=$292.00, ROI=58.40% STRONG in PUBLIC_COMP_FALLBACK mode)",
+        "timestamp": "2026-11-24T00:21:00Z",
+        "metrics": {
+          "sample_lots_evaluated": 3,
+          "verdict_counts": {
+            "STRONG": 1,
+            "MARGINAL": 1,
+            "PASS": 1
+          },
+          "sample_strong_roi_pct": 58.4,
+          "sample_strong_net_profit": 292.0
+        }
+      },
+      "supports_claims": [
+        "Built a read-only Liquidation.com and B-Stock manifest ROI analyser with transparent landed-cost arithmetic and configurable verdict bands",
+        "Python",
+        "Financial & ROI Analytics"
+      ],
+      "source_urls": [
+        "https://auctions.tossonanalytics.com"
+      ]
+    },
+    {
+      "artifact_id": "b2-hibid-churn-tracker",
+      "kind": "report",
+      "title": "B2 HiBid Churn & Re-List Detection Tracker (Title Similarity + Pillow dHash)",
+      "repo_path": "auction-intel-v2/reports/sample_hibid_churn_report.md",
+      "evidence": {
+        "command": "PYTHONPATH=auction-intel-v2 .venv/bin/python -m hibid_churn --prev tests/fixtures_synthetic/build_b/hibid_prev.json --curr tests/fixtures_synthetic/build_b/hibid_curr.json --categories Tools --out-md auction-intel-v2/reports/sample_hibid_churn_report.md --out-json auction-intel-v2/reports/sample_hibid_churn_report.json && .venv/bin/pytest tests/test_build_b_hibid_churn.py",
+        "result": "PASS (3 tests passed; planted relist HB-2004<-HB-1004 caught via TITLE_AND_IMAGE with title_sim=1.0000 and Pillow dHash Hamming=3 bits)",
+        "timestamp": "2026-11-24T00:21:00Z",
+        "metrics": {
+          "relisted_detected": 2,
+          "planted_relist_hamming_distance": 3,
+          "price_up": 1,
+          "price_down": 1
+        }
+      },
+      "supports_claims": [
+        "Built a read-only HiBid auction churn tracker combining normalized title similarity and Pillow 64-bit perceptual dHash for re-list detection",
+        "Python",
+        "Pillow Perceptual Image Hashing"
+      ],
+      "source_urls": [
+        "https://auctions.tossonanalytics.com"
+      ]
+    },
+    {
+      "artifact_id": "b3-land-parcel-scorer",
+      "kind": "report",
+      "title": "B3 Fail-Closed NC Land Parcel Scorer (Caswell, Rockingham, Person)",
+      "repo_path": "auction-intel-v2/reports/sample_land_scorer_report.md",
+      "evidence": {
+        "command": "PYTHONPATH=auction-intel-v2 .venv/bin/python -m land_scorer --input tests/fixtures_synthetic/build_b/land_parcels_sample.json --out-md auction-intel-v2/reports/sample_land_scorer_report.md --out-json auction-intel-v2/reports/sample_land_scorer_report.json && .venv/bin/pytest tests/test_build_b_land_scorer.py",
+        "result": "PASS (3 tests passed; 4/11 passing parcels emitted, 7 fail-closed exclusions counted, search-results URLs sanitized to 'URL not captured')",
+        "timestamp": "2026-11-24T00:21:00Z",
+        "metrics": {
+          "evaluated": 11,
+          "passing": 4,
+          "auction_track_passing": 1,
+          "cash_track_only_passing": 3,
+          "excluded_fail_closed": 7
+        }
+      },
+      "supports_claims": [
+        "Built a fail-closed geospatial land parcel scorer with Haversine distance ranking and strict direct-URL validation",
+        "Python",
+        "Data Validation & Fail-Closed Pipelines"
+      ],
+      "source_urls": [
+        "https://auctions.tossonanalytics.com"
+      ]
+    },
+    {
+      "artifact_id": "b4-kia-carnival-checker",
+      "kind": "report",
+      "title": "B4 Strictly Isolated Kia Carnival (2022+) Checker & KFA Checklist Stub",
+      "repo_path": "auction-intel-v2/reports/sample_kia_carnival_report.md",
+      "evidence": {
+        "command": ".venv/bin/pytest tests/test_build_b_kia_carnival.py",
+        "result": "PASS (3 tests passed; VIP Lounge flagged out, SC266-open VIN flagged with NHTSA direct URL, AST confirmed 0 cross-imports with B1-B3, C-3 checklist banner verified)",
+        "timestamp": "2026-11-24T00:21:00Z",
+        "metrics": {
+          "listings_evaluated": 5,
+          "vip_lounge_flagged_out": 1,
+          "sc266_open_flagged": 1,
+          "cross_module_imports": 0
+        }
+      },
+      "supports_claims": [
+        "Built an isolated NHTSA vPIC VIN decoder, SC266 recall monitor, trim filter, and pre-signing document checklist generator",
+        "REST API Integration",
+        "Python"
+      ],
+      "source_urls": [
+        "https://vpic.nhtsa.dot.gov/api/",
+        "https://api.nhtsa.gov/recalls/recallsByVehicle",
+        "https://www.nhtsa.gov/recalls"
+      ]
+    },
+    {
+      "artifact_id": "b5-auction-integration-runbook",
+      "kind": "report",
+      "title": "B5 Auction Intelligence v2 Non-Invasive Sidecar Integration Guide & Skill Runbook",
+      "repo_path": "auction-intel-v2/INTEGRATION.md",
+      "evidence": {
+        "command": "test -f auction-intel-v2/INTEGRATION.md && test -f .agents/skills/build-b-auction-intel-v2/SKILL.md && .venv/bin/pytest tests/test_build_b_*.py",
+        "result": "PASS (13/13 Build B tests passed offline; read-only Mon/Wed/Fri & closing-<48h sidecar hooks documented with zero live dashboard modifications)",
+        "timestamp": "2026-11-24T00:21:00Z",
+        "metrics": {
+          "build_b_pytest_passed": 13,
+          "build_b_pytest_failed": 0
+        }
+      },
+      "supports_claims": [
+        "Authored non-invasive read-only sidecar integration documentation and operational SKILL.md runbook for scheduled analytics jobs",
+        "Technical Documentation & Runbooks"
+      ],
+      "source_urls": [
+        "https://auctions.tossonanalytics.com"
+      ]
+    }
+  ]
+}

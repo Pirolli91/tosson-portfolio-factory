@@ -1,0 +1,42 @@
+name: 'pfas_warehouse'
+version: '1.0.0'
+config-version: 2
+
+profile: 'pfas_warehouse'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  pfas_warehouse:
+    +schema: seeds
+    epa_2024_pfas_benchmarks:
+      +column_types:
+        contaminant: varchar
+        mcl_benchmark_ppt: double
+        mcl_benchmark_ug_l: double
+        hbwc_ppt: double
+        hbwc_ug_l: double
+        in_hazard_index: boolean
+        benchmark_type: varchar
+        regulatory_source_url: varchar
+
+models:
+  pfas_warehouse:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts

@@ -1,0 +1,218 @@
+// =============================================================================
+// Power BI DAX Measure Library — North Carolina EPA UCMR 5 PFAS Screening Model
+// =============================================================================
+// Author / Legal Entity: Tosson Services LLC dba Tosson Environmental Analytics
+// Scope Note: Power BI proof rests on this reviewable DAX measure library and
+// the companion semantic model specification (semantic_model.md, model_spec.json).
+// No .pbix file is produced in Sprint 5 (Windows Power BI Desktop follow-up).
+//
+// Screening-Only Disclaimer:
+// EPA UCMR 5 occurrence records are compared strictly against EPA's 2024
+// National Primary Drinking Water Regulation (NPDWR) MCL and Hazard Index
+// screening benchmarks for informational occurrence analysis only — never as
+// regulatory compliance determinations.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Display Folder: 01. Volume & Coverage
+// -----------------------------------------------------------------------------
+
+[Total Analytical Samples] =
+COUNTROWS ( fact_ucmr5_screening )
+
+[Distinct Water Systems Screened] =
+DISTINCTCOUNT ( fact_ucmr5_screening[pwsid] )
+
+[Distinct Counties Screened] =
+DISTINCTCOUNT ( dim_water_system[county_name] )
+
+[Detected Samples (>= MRL)] =
+CALCULATE (
+    COUNTROWS ( fact_ucmr5_screening ),
+    fact_ucmr5_screening[is_detected] = TRUE ()
+)
+
+// -----------------------------------------------------------------------------
+// Display Folder: 02. Screening & Detection Rates
+// -----------------------------------------------------------------------------
+
+[Detection Rate %] =
+DIVIDE (
+    [Detected Samples (>= MRL)],
+    [Total Analytical Samples],
+    0
+)
+
+[Samples Above 2024 MCL Screening Benchmark] =
+CALCULATE (
+    COUNTROWS ( fact_ucmr5_screening ),
+    fact_ucmr5_screening[above_mcl_benchmark_flag] = TRUE ()
+)
+
+[Screening Benchmark Exceedance Rate %] =
+DIVIDE (
+    [Samples Above 2024 MCL Screening Benchmark],
+    CALCULATE (
+        COUNTROWS ( fact_ucmr5_screening ),
+        NOT ( ISBLANK ( fact_ucmr5_screening[mcl_benchmark_ppt] ) )
+    ),
+    0
+)
+
+[Systems With Any Sample Above 2024 MCL Benchmark] =
+CALCULATE (
+    DISTINCTCOUNT ( fact_ucmr5_screening[pwsid] ),
+    fact_ucmr5_screening[above_mcl_benchmark_flag] = TRUE ()
+)
+
+[Share of Systems Above 2024 MCL Benchmark %] =
+DIVIDE (
+    [Systems With Any Sample Above 2024 MCL Benchmark],
+    [Distinct Water Systems Screened],
+    0
+)
+
+// -----------------------------------------------------------------------------
+// Display Folder: 03. Concentration & Benchmark Ratios (ppt / ng/L)
+// -----------------------------------------------------------------------------
+
+[Max Detected Concentration (ppt)] =
+CALCULATE (
+    MAX ( fact_ucmr5_screening[result_ppt] ),
+    fact_ucmr5_screening[is_detected] = TRUE ()
+)
+
+[Mean Detected Concentration (ppt)] =
+CALCULATE (
+    AVERAGE ( fact_ucmr5_screening[result_ppt] ),
+    fact_ucmr5_screening[is_detected] = TRUE ()
+)
+
+[Max MCL Benchmark Ratio (x)] =
+MAX ( fact_ucmr5_screening[benchmark_ratio] )
+
+[Average MCL Benchmark Ratio (Detected, x)] =
+CALCULATE (
+    AVERAGE ( fact_ucmr5_screening[benchmark_ratio] ),
+    fact_ucmr5_screening[is_detected] = TRUE (),
+    NOT ( ISBLANK ( fact_ucmr5_screening[benchmark_ratio] ) )
+)
+
+// -----------------------------------------------------------------------------
+// Display Folder: 04. EPA Hazard Index Screening (HFPO-DA, PFNA, PFHxS, PFBS)
+// -----------------------------------------------------------------------------
+// Computes sum of (Concentration ppt / HBWC ppt) across the 4 mixture PFAS:
+// HFPO-DA (10 ppt), PFNA (10 ppt), PFHxS (10 ppt), PFBS (2,000 ppt).
+// Screening threshold: Hazard Index > 1.0 (unitless).
+
+[System-Event Hazard Index (Max)] =
+MAXX (
+    SUMMARIZE (
+        fact_ucmr5_screening,
+        fact_ucmr5_screening[pwsid],
+        fact_ucmr5_screening[collection_date]
+    ),
+    CALCULATE (
+        SUMX (
+            FILTER (
+                fact_ucmr5_screening,
+                fact_ucmr5_screening[in_hazard_index] = TRUE ()
+                    && fact_ucmr5_screening[is_detected] = TRUE ()
+                    && NOT ( ISBLANK ( fact_ucmr5_screening[hbwc_ppt] ) )
+            ),
+            DIVIDE (
+                fact_ucmr5_screening[result_ppt],
+                fact_ucmr5_screening[hbwc_ppt],
+                0
+            )
+        )
+    )
+)
+
+[Systems Above Hazard Index 1.0 Benchmark] =
+COUNTROWS (
+    FILTER (
+        VALUES ( dim_water_system[pwsid] ),
+        [System-Event Hazard Index (Max)] > 1.0
+    )
+)
+
+// -----------------------------------------------------------------------------
+// Display Folder: 05. Year-over-Year (YoY) Screening Deltas
+// -----------------------------------------------------------------------------
+
+[Detection Rate % PY] =
+CALCULATE (
+    [Detection Rate %],
+    SAMEPERIODLASTYEAR ( dim_date[date_key] )
+)
+
+[Detection Rate YoY Delta (pp)] =
+VAR CurrentRate = [Detection Rate %]
+VAR PriorRate = [Detection Rate % PY]
+RETURN
+IF (
+    ISBLANK ( PriorRate ),
+    BLANK (),
+    ( CurrentRate - PriorRate ) * 100
+)
+
+[Samples Above Benchmark PY] =
+CALCULATE (
+    [Samples Above 2024 MCL Screening Benchmark],
+    SAMEPERIODLASTYEAR ( dim_date[date_key] )
+)
+
+[Samples Above Benchmark YoY %] =
+VAR CurrentCnt = [Samples Above 2024 MCL Screening Benchmark]
+VAR PriorCnt = [Samples Above Benchmark PY]
+RETURN
+IF (
+    ISBLANK ( PriorCnt ) || PriorCnt = 0,
+    BLANK (),
+    DIVIDE ( CurrentCnt - PriorCnt, PriorCnt )
+)
+
+// -----------------------------------------------------------------------------
+// Display Folder: 06. County Rankings & Dynamic Screening Labels
+// -----------------------------------------------------------------------------
+
+[County Rank by Samples Above Benchmark] =
+IF (
+    HASONEVALUE ( dim_county[county_name] ),
+    RANKX (
+        ALLSELECTED ( dim_county[county_name] ),
+        [Samples Above 2024 MCL Screening Benchmark],
+        ,
+        DESC,
+        DENSE
+    ),
+    BLANK ()
+)
+
+[County Rank by Detection Rate] =
+IF (
+    HASONEVALUE ( dim_county[county_name] ),
+    RANKX (
+        ALLSELECTED ( dim_county[county_name] ),
+        [Detection Rate %],
+        ,
+        DESC,
+        DENSE
+    ),
+    BLANK ()
+)
+
+[System Screening Status Label] =
+VAR AboveMcl = [Samples Above 2024 MCL Screening Benchmark]
+VAR MaxHI = [System-Event Hazard Index (Max)]
+VAR DetectedCnt = [Detected Samples (>= MRL)]
+RETURN
+SWITCH (
+    TRUE (),
+    AboveMcl > 0 && MaxHI > 1.0, "Above Individual MCL & Hazard Index Screening Benchmarks",
+    AboveMcl > 0, "Above 2024 Individual MCL Screening Benchmark",
+    MaxHI > 1.0, "Above 2024 Hazard Index Screening Benchmark (> 1.0)",
+    DetectedCnt > 0, "Detected Below 2024 Screening Benchmarks",
+    "No Detections (>= MRL)"
+)

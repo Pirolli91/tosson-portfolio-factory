@@ -1,0 +1,40 @@
+# B1 Manifest ROI Analyser — Rules & Configurable Defaults
+# Owner: Temitope Soneye (Tosson Services LLC dba Tosson Environmental Analytics)
+# Read-only analysis only. All rates are transparent defaults and can be overridden via CLI.
+
+verdict_bands:
+  strong:
+    min_roi_pct: 40.0
+    min_net_profit: 150.0
+  marginal:
+    min_roi_pct: 15.0
+    min_net_profit_exclusive: 0.0  # net_profit must be strictly > 0.0
+  # PASS: roi_pct < 15.0 OR net_profit <= 0.0
+
+marketplace_defaults:
+  liquidation_com:
+    buyers_premium_rate: 0.10
+  bstock:
+    buyers_premium_rate: 0.00
+  default:
+    buyers_premium_rate: 0.10
+
+selling_fees:
+  # Default online/local-marketplace selling fee rate (e.g., 10% blended eBay/FB shipping/platform fee)
+  marketplace_fee_rate: 0.10
+
+public_comp_fallback:
+  # Low/high sensitivity spread around mid estimate (+/- 15%)
+  range_spread_pct: 0.15
+  # Recovery multipliers applied to Unit Retail / MSRP in PUBLIC_COMP_FALLBACK mode
+  condition_multipliers:
+    new: 0.55
+    shelf_pull: 0.45
+    open_box: 0.40
+    customer_return: 0.30
+    salvage: 0.15
+    unknown: 0.25
+
+sold_history_matching:
+  # Minimum normalized token overlap ratio to match a manifest item against owner sold history
+  min_token_overlap: 0.50

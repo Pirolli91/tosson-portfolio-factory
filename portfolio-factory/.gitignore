@@ -1,0 +1,31 @@
+# Build A: Job-Hunt Portfolio Factory (.gitignore)
+# Local warehouse caches & databases (regenerable via ingest/ingest_ucmr5.py)
+warehouse/raw/
+warehouse/*.duckdb
+warehouse/*.duckdb.wal
+warehouse/*.tmp
+
+# dbt runtime logs & packages (keep target/manifest.json, catalog.json, index.html, run_results.json committed)
+pfas_warehouse/logs/
+pfas_warehouse/dbt_packages/
+pfas_warehouse/target/compiled/
+pfas_warehouse/target/run/
+pfas_warehouse/target/partial_parse.msgpack
+pfas_warehouse/target/graph.gpickle
+pfas_warehouse/target/graph_summary.json
+pfas_warehouse/target/semantic_manifest.json
+
+# Airflow runtime state
+.airflow_home/
+airflow/
+
+# Python caches & virtualenvs
+__pycache__/
+*.py[cod]
+.venv/
+.venv-airflow/
+.pytest_cache/
+
+# Environment files (never commit values)
+.env
+.env.local

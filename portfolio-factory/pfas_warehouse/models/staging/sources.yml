@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: raw_ucmr5
+    schema: raw_ucmr5
+    description: >
+      Raw North Carolina EPA UCMR 5 occurrence analytical results and public-domain
+      EPA SDWIS county geography ingested by portfolio-factory/ingest/ingest_ucmr5.py.
+      All data is public-domain U.S. EPA occurrence data for informational screening only.
+    tables:
+      - name: ucmr5_nc_results
+        description: "Raw NC analytical results extracted from EPA UCMR5_All.txt."
+      - name: sdwis_nc_counties
+        description: "Deduplicated NC PWSID-to-county crosswalk from EPA Envirofacts SDWIS GEOGRAPHIC_AREA."
+      - name: ingest_audit
+        description: "Row-count reconciliation and SHA-256 checksum audit log from the latest ingest run."

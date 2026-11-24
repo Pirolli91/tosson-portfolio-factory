@@ -1,0 +1,3 @@
+pwsid,county_served,city_served,pws_type_code,source_url
+NC0100001,Wake,Raleigh,CWS,https://data.epa.gov/efservice/GEOGRAPHIC_AREA/PRIMACY_AGENCY_CODE/NC/PWS_TYPE_CODE/CWS/CSV
+NC0100002,Cumberland,Fayetteville,CWS,https://data.epa.gov/efservice/GEOGRAPHIC_AREA/PRIMACY_AGENCY_CODE/NC/PWS_TYPE_CODE/CWS/CSV

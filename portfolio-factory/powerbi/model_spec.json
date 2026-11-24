@@ -1,0 +1,141 @@
+{
+  "model_name": "NC_EPA_UCMR5_PFAS_Screening_Semantic_Model",
+  "version": "1.0.0",
+  "owner": "Temitope Soneye",
+  "legal_entity": "Tosson Services LLC dba Tosson Environmental Analytics",
+  "pbix_included": false,
+  "pbix_scope_note": "Power BI proof rests on measures.dax + semantic_model.md + model_spec.json; .pbix authoring requires Windows Power BI Desktop and is out of Sprint 5 scope.",
+  "screening_disclaimer": "EPA UCMR 5 occurrence data compared strictly against 2024 EPA PFAS MCL and Hazard Index screening benchmarks for informational screening only — never regulatory compliance determinations.",
+  "regulatory_status_footnote": {
+    "status": "proposed / not final",
+    "summary": "All six 2024 EPA NPDWR PFAS benchmarks (PFOA 4 ppt, PFOS 4 ppt, PFHxS 10 ppt, PFNA 10 ppt, HFPO-DA 10 ppt, Hazard Index 1.0) are implemented. EPA has initiated a proposed / not final rulemaking concerning potential rescission of the non-PFOA/PFOS standards while retaining PFOA and PFOS.",
+    "source_urls": [
+      "https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation",
+      "https://www.epa.gov/sdwa/proposed-pfas-rescission-rule",
+      "https://www.epa.gov/dwucmr/occurrence-data-unregulated-contaminant-monitoring-rule"
+    ]
+  },
+  "tables": [
+    {
+      "name": "fact_ucmr5_screening",
+      "role": "fact",
+      "source_dbt_model": "int_ucmr5_pfas_screened",
+      "grain": ["pwsid", "sample_id", "sample_point_id", "collection_date", "contaminant"],
+      "columns": [
+        {"name": "pwsid", "data_type": "string", "is_key": true},
+        {"name": "county_name", "data_type": "string"},
+        {"name": "sample_id", "data_type": "string"},
+        {"name": "sample_point_id", "data_type": "string"},
+        {"name": "collection_date", "data_type": "date"},
+        {"name": "contaminant", "data_type": "string"},
+        {"name": "is_detected", "data_type": "boolean"},
+        {"name": "result_ug_l", "data_type": "double", "format": "0.0000"},
+        {"name": "result_ppt", "data_type": "double", "format": "#,##0.00"},
+        {"name": "mrl_ppt", "data_type": "double", "format": "#,##0.00"},
+        {"name": "mcl_benchmark_ppt", "data_type": "double", "format": "#,##0.00"},
+        {"name": "hbwc_ppt", "data_type": "double", "format": "#,##0.00"},
+        {"name": "in_hazard_index", "data_type": "boolean"},
+        {"name": "benchmark_ratio", "data_type": "double", "format": "0.00\"x\""},
+        {"name": "above_mcl_benchmark_flag", "data_type": "boolean"}
+      ]
+    },
+    {
+      "name": "dim_water_system",
+      "role": "dimension",
+      "source_dbt_model": "mart_system_screening",
+      "grain": ["pwsid"],
+      "columns": [
+        {"name": "pwsid", "data_type": "string", "is_key": true},
+        {"name": "pws_name", "data_type": "string"},
+        {"name": "county_name", "data_type": "string"},
+        {"name": "size_category", "data_type": "string"},
+        {"name": "screening_status", "data_type": "string"}
+      ]
+    },
+    {
+      "name": "dim_county",
+      "role": "dimension",
+      "source_dbt_model": "mart_county_scorecard",
+      "grain": ["county_name"],
+      "columns": [
+        {"name": "county_name", "data_type": "string", "is_key": true},
+        {"name": "systems_monitored", "data_type": "int64"},
+        {"name": "primary_exceeding_analyte", "data_type": "string"}
+      ]
+    },
+    {
+      "name": "dim_analyte_benchmark",
+      "role": "dimension",
+      "source_dbt_model": "mart_analyte_summary",
+      "grain": ["contaminant"],
+      "columns": [
+        {"name": "contaminant", "data_type": "string", "is_key": true},
+        {"name": "analyte_group", "data_type": "string"},
+        {"name": "mcl_benchmark_ppt", "data_type": "double"},
+        {"name": "hbwc_ppt", "data_type": "double"},
+        {"name": "in_hazard_index", "data_type": "boolean"}
+      ]
+    },
+    {
+      "name": "dim_date",
+      "role": "date_dimension",
+      "is_date_table": true,
+      "grain": ["date_key"],
+      "columns": [
+        {"name": "date_key", "data_type": "date", "is_key": true},
+        {"name": "calendar_year", "data_type": "int64"},
+        {"name": "calendar_quarter", "data_type": "int64"},
+        {"name": "year_quarter", "data_type": "string", "sort_by": "year_quarter_sort"},
+        {"name": "year_quarter_sort", "data_type": "int64"},
+        {"name": "month_number", "data_type": "int64"},
+        {"name": "month_name", "data_type": "string", "sort_by": "month_number"}
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "fact_ucmr5_screening",
+      "from_column": "pwsid",
+      "to_table": "dim_water_system",
+      "to_column": "pwsid",
+      "cardinality": "many_to_one",
+      "cross_filter_direction": "single",
+      "is_active": true
+    },
+    {
+      "from_table": "dim_water_system",
+      "from_column": "county_name",
+      "to_table": "dim_county",
+      "to_column": "county_name",
+      "cardinality": "many_to_one",
+      "cross_filter_direction": "single",
+      "is_active": true
+    },
+    {
+      "from_table": "fact_ucmr5_screening",
+      "from_column": "contaminant",
+      "to_table": "dim_analyte_benchmark",
+      "to_column": "contaminant",
+      "cardinality": "many_to_one",
+      "cross_filter_direction": "single",
+      "is_active": true
+    },
+    {
+      "from_table": "fact_ucmr5_screening",
+      "from_column": "collection_date",
+      "to_table": "dim_date",
+      "to_column": "date_key",
+      "cardinality": "many_to_one",
+      "cross_filter_direction": "single",
+      "is_active": true
+    }
+  ],
+  "measure_folders": [
+    "01. Volume & Coverage",
+    "02. Screening & Detection Rates",
+    "03. Concentration & Benchmark Ratios (ppt / ng/L)",
+    "04. EPA Hazard Index Screening (HFPO-DA, PFNA, PFHxS, PFBS)",
+    "05. Year-over-Year (YoY) Screening Deltas",
+    "06. County Rankings & Dynamic Screening Labels"
+  ]
+}

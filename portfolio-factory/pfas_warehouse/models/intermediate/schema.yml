@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: int_ucmr5_pfas_screened
+    description: >
+      Analytical-result grain combining NC EPA UCMR 5 results, SDWIS county crosswalk,
+      and 2024 EPA PFAS MCL / HBWC screening benchmarks. Informational screening only.
+    columns:
+      - name: result_row_id
+        description: "Primary key matching stg_ucmr5_results."
+        tests:
+          - not_null
+          - unique
+      - name: pwsid
+        description: "Foreign key to stg_pws_county_crosswalk."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_pws_county_crosswalk')
+                field: pwsid
+      - name: county_name
+        description: "NC county served or 'UNMAPPED_COUNTY'."
+        tests:
+          - not_null
+      - name: above_mcl_benchmark_flag
+        description: "TRUE when detected concentration exceeds the 2024 EPA individual MCL screening benchmark."
+        tests:
+          - not_null
+
+  - name: int_system_hazard_index
+    description: >
+      Sampling-event grain computing the 2024 EPA PFAS mixture Hazard Index
+      (HFPO-DA/10 + PFNA/10 + PFHxS/10 + PFBS/2000, in ppt) vs 1.0 screening benchmark.
+    columns:
+      - name: hi_event_key
+        description: "Primary key (pwsid|sample_point_id|collection_date)."
+        tests:
+          - not_null
+          - unique
+      - name: hazard_index_score
+        description: "Unitless sum of HBWC ratios across the four mixture PFAS analytes."
+        tests:
+          - not_null
+      - name: above_hi_benchmark_flag
+        description: "TRUE when hazard_index_score > 1.0 (screening benchmark)."
+        tests:
+          - not_null

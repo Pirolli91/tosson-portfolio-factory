@@ -1,0 +1,39 @@
+# B3 Land Parcel Scorer — Owner Criteria & Scoring Weights
+# Owner: Temitope Soneye (Tosson Services LLC dba Tosson Environmental Analytics)
+# Fail-closed rules: missing/invalid price or acreage is excluded and counted, never estimated.
+
+state: NC
+counties:
+  - Caswell
+  - Rockingham
+  - Person
+
+acreage:
+  min_acres: 1.0
+  max_acres: 5.0
+
+pricing:
+  # Cash track: strictly less than $30,000
+  cash_track_max_price: 30000.0
+  # Auction track: less than or equal to $5,000
+  auction_track_max_price: 5000.0
+
+reference_point:
+  name: "Mebane, NC"
+  lat: 36.0960
+  lon: -79.2670
+  max_scored_distance_miles: 60.0
+
+scoring_weights:
+  acreage_fit: 20.0
+  price_per_acre: 30.0
+  road_frontage: 20.0
+  zoning_signal: 15.0
+  distance_from_mebane: 15.0
+
+# Reference benchmarks used for transparent normalization (0..100 scale)
+scoring_benchmarks:
+  ideal_min_acres: 2.0
+  ideal_max_acres: 4.0
+  target_low_price_per_acre: 2500.0
+  target_high_price_per_acre: 15000.0

@@ -1,0 +1,8 @@
+Jordan Rivera — Planted Unsupported & Forbidden Claims Packet
+I am a U.S. citizen with an active Top Secret security clearance.
+
+Experience:
+- Administered production Snowflake warehouses and deployed Kubernetes clusters with Terraform and Apache Spark on Databricks.
+- Built EDI X12 837/835 healthcare claims and HEDIS pipelines.
+- Exported proprietary employer dataset and internal database screenshots for portfolio analysis.
+- Published UCMR 5 PFAS reports claiming out of compliance water utilities.

@@ -1,0 +1,54 @@
+# Forbidden claim rules for Build A Packet Claim-Verifier (A5)
+# NOTE: Employer blocklist patterns in this file exist solely to detect and block
+# proprietary employer material per Sprint 5 standing rules (C-2 exempt).
+version: "1.0.0"
+
+rules:
+  - id: false_us_citizenship
+    category: citizenship
+    severity: critical
+    description: "Unverified U.S. citizenship claim (distinct from Legal Permanent Resident work authorization)."
+    allow_if_in_base_docs: true
+    patterns:
+      - '(?i)\b(?:u\.?s\.?|united\s+states|american)\s+citizen(?:ship)?\b'
+      - '(?i)\bi\s+am\s+a\s+citizen\s+of\s+the\s+united\s+states\b'
+    negative_patterns:
+      - '(?i)\blegal\s+permanent\s+resident\b'
+      - '(?i)\bnot\s+a\s+(?:u\.?s\.?\s+)?citizen\b'
+
+  - id: unverified_security_clearance
+    category: clearance
+    severity: critical
+    description: "Security clearance claim (Secret, Top Secret, TS/SCI, DoD clearance) not backed by base documents."
+    allow_if_in_base_docs: true
+    patterns:
+      - '(?i)\b(?:active\s+)?(?:top\s+secret|ts/sci|secret\s+clearance|security\s+clearance|dod\s+clearance|public\s+trust\s+clearance)\b'
+      - '(?i)\bcleared\s+for\s+(?:classified|secret|top\s+secret)\b'
+
+  - id: employer_proprietary_material
+    category: employer_proprietary
+    severity: critical
+    description: "Reference to employer-proprietary systems, internal datasets, screenshots, or algorithms (bare employment history in base docs is allowed; proprietary material is strictly forbidden)."
+    allow_if_in_base_docs: false
+    patterns:
+      - '(?i)\bprogressive(?:\s+insurance)?\b[^.\n]{0,80}\b(?:proprietary|confidential|internal\s+(?:database|schema|table|system|code|dashboard|tool)|screenshot|policyholder|claims\s+data(?:set)?|underwriting\s+algorithm|rating\s+engine|exported\s+data|source\s+code|snapshot\s+telematics)\b'
+      - '(?i)\b(?:proprietary|confidential|internal\s+(?:database|schema|table|system)|screenshot|policyholder\s+data|claims\s+dataset|exported\s+production\s+data)\b[^.\n]{0,80}\bprogressive(?:\s+insurance)?\b'
+      - '(?i)\b(?:proprietary\s+(?:employer|company|insurer)\s+(?:data|dataset|system|code|screenshot|algorithm)|exported\s+(?:employer|company)\s+data)\b'
+
+  - id: ucmr5_violation_framing
+    category: regulatory_framing
+    severity: critical
+    description: "UCMR 5 data must be framed strictly as occurrence/screening vs MCL benchmarks, never as regulatory compliance violations."
+    allow_if_in_base_docs: false
+    patterns:
+      - '(?i)\b(?:ucmr\s*5|pfas|mcl)[^.\n]{0,80}\bviolations?\b'
+      - '(?i)\bviolations?\b[^.\n]{0,80}\b(?:ucmr\s*5|pfas|mcl)\b'
+      - '(?i)\b(?:ucmr\s*5|pfas)[^.\n]{0,60}\b(?:non-?compliant|out\s+of\s+compliance|illegal\s+levels)\b'
+
+  - id: overclaimed_snowflake_execution
+    category: precise_claim_language
+    severity: high
+    description: "Snowflake SQL portfolio artifact is dialect-only (unexecuted); claiming production Snowflake administration or live Snowflake account execution is forbidden unless backed by base docs."
+    allow_if_in_base_docs: true
+    patterns:
+      - '(?i)\b(?:production\s+snowflake|administered\s+snowflake|managed\s+snowflake\s+(?:warehouse|account|cluster)|executed\s+(?:in|against)\s+snowflake|snowflake\s+cloud\s+admin(?:istration)?)\b'

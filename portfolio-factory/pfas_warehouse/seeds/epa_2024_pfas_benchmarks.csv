@@ -1,0 +1,7 @@
+contaminant,mcl_benchmark_ppt,mcl_benchmark_ug_l,hbwc_ppt,hbwc_ug_l,in_hazard_index,benchmark_type,regulatory_source_url
+PFOA,4.0,0.004,,,false,individual_mcl_screening,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation
+PFOS,4.0,0.004,,,false,individual_mcl_screening,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation
+PFHxS,10.0,0.010,10.0,0.010,true,individual_mcl_and_hi_screening,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation
+PFNA,10.0,0.010,10.0,0.010,true,individual_mcl_and_hi_screening,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation
+HFPO-DA,10.0,0.010,10.0,0.010,true,individual_mcl_and_hi_screening,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation
+PFBS,,,2000.0,2.000,true,hazard_index_component_only,https://www.federalregister.gov/documents/2024/04/26/2024-07773/pfas-national-primary-drinking-water-regulation

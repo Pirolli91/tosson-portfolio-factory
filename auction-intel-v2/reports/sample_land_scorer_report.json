@@ -1,0 +1,191 @@
+{
+  "module": "b3-land-parcel-scorer",
+  "mode": "READ_ONLY_FAIL_CLOSED",
+  "legal_entity": "Tosson Services LLC dba Tosson Environmental Analytics",
+  "generated_at": "2026-11-24T00:20:00Z",
+  "criteria": {
+    "state": "NC",
+    "counties": [
+      "Caswell",
+      "Rockingham",
+      "Person"
+    ],
+    "min_acres": 1.0,
+    "max_acres": 5.0,
+    "cash_track_max_price_exclusive": 30000.0,
+    "auction_track_max_price_inclusive": 5000.0,
+    "reference_point": "Mebane, NC"
+  },
+  "counts": {
+    "total_evaluated": 11,
+    "passing": 4,
+    "auction_track_passing": 1,
+    "cash_track_only_passing": 3,
+    "excluded": 7
+  },
+  "excluded_summary": {
+    "ABOVE_CASH_TRACK_MAX_PRICE": 1,
+    "MISSING_OR_INVALID_ACREAGE": 1,
+    "MISSING_OR_INVALID_PRICE": 1,
+    "OUTSIDE_ACREAGE_BOUNDS": 2,
+    "OUTSIDE_STATE": 1,
+    "OUTSIDE_TARGET_COUNTIES": 1
+  },
+  "excluded_records": [
+    {
+      "parcel_id": "CAS-BAD-NOPRICE",
+      "title": "Missing Price Parcel",
+      "reason": "MISSING_OR_INVALID_PRICE"
+    },
+    {
+      "parcel_id": "PER-BAD-NOACRE",
+      "title": "Missing Acreage Parcel",
+      "reason": "MISSING_OR_INVALID_ACREAGE"
+    },
+    {
+      "parcel_id": "ROC-BAD-30K",
+      "title": "Exact $30,000 Boundary Parcel (Cash Track Is Strictly < $30k)",
+      "reason": "ABOVE_CASH_TRACK_MAX_PRICE",
+      "price": 30000.0
+    },
+    {
+      "parcel_id": "ALA-BAD-COUNTY",
+      "title": "Alamance County Out-of-Scope Parcel",
+      "reason": "OUTSIDE_TARGET_COUNTIES",
+      "county": "Alamance"
+    },
+    {
+      "parcel_id": "CAS-BAD-SMALL",
+      "title": "Sub-1-Acre Lot",
+      "reason": "OUTSIDE_ACREAGE_BOUNDS",
+      "acreage": 0.75
+    },
+    {
+      "parcel_id": "PER-BAD-LARGE",
+      "title": "Oversized 6.2 Acre Tract",
+      "reason": "OUTSIDE_ACREAGE_BOUNDS",
+      "acreage": 6.2
+    },
+    {
+      "parcel_id": "VA-BAD-STATE",
+      "title": "Danville VA Border Tract",
+      "reason": "OUTSIDE_STATE",
+      "state": "VA"
+    }
+  ],
+  "passing_parcels": [
+    {
+      "parcel_id": "CAS-00412",
+      "title": "NC-86 Rural Wooded Tract",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 2.4,
+      "price": 4200.0,
+      "price_per_acre": 1750.0,
+      "primary_track": "AUCTION_TRACK",
+      "tracks": [
+        "AUCTION_TRACK",
+        "CASH_TRACK"
+      ],
+      "road_frontage": "Paved state road (SR 1152)",
+      "zoning": "RA (Rural Agricultural)",
+      "distance_from_mebane_miles": 21.0,
+      "coordinate_status": "COORDINATES_PROVIDED",
+      "url": "https://caswellcountync.gov/tax-sales/parcels/CAS-00412",
+      "url_status": "DIRECT_URL_VALIDATED",
+      "source": "caswell_tax_auction",
+      "score": 94.75,
+      "score_breakdown": {
+        "acreage_fit": 20.0,
+        "price_per_acre": 30.0,
+        "road_frontage": 20.0,
+        "zoning_signal": 15.0,
+        "distance_from_mebane": 9.75
+      }
+    },
+    {
+      "parcel_id": "PER-01988",
+      "title": "Timberlake Road 3.5 Acre Lot",
+      "county": "Person",
+      "state": "NC",
+      "acreage": 3.5,
+      "price": 22500.0,
+      "price_per_acre": 6428.57,
+      "primary_track": "CASH_TRACK",
+      "tracks": [
+        "CASH_TRACK"
+      ],
+      "road_frontage": "Gravel deeded easement",
+      "zoning": "Rural Residential-Ag",
+      "distance_from_mebane_miles": 21.31,
+      "coordinate_status": "COORDINATES_PROVIDED",
+      "url": "https://personcountync.gov/gis/parcel/PER-01988",
+      "url_status": "DIRECT_URL_VALIDATED",
+      "source": "person_gis_public",
+      "score": 79.18,
+      "score_breakdown": {
+        "acreage_fit": 20.0,
+        "price_per_acre": 21.51,
+        "road_frontage": 13.0,
+        "zoning_signal": 15.0,
+        "distance_from_mebane": 9.67
+      }
+    },
+    {
+      "parcel_id": "ROC-00771",
+      "title": "Reidsville Fringe 1.5 Acre Parcel",
+      "county": "Rockingham",
+      "state": "NC",
+      "acreage": 1.5,
+      "price": 18000.0,
+      "price_per_acre": 12000.0,
+      "primary_track": "CASH_TRACK",
+      "tracks": [
+        "CASH_TRACK"
+      ],
+      "road_frontage": "Paved public road",
+      "zoning": "RA",
+      "distance_from_mebane_miles": 28.5,
+      "coordinate_status": "COORDINATES_PROVIDED",
+      "url": "URL not captured",
+      "url_status": "URL_NOT_CAPTURED",
+      "source": "rockingham_public_feed",
+      "score": 67.36,
+      "score_breakdown": {
+        "acreage_fit": 15.0,
+        "price_per_acre": 9.48,
+        "road_frontage": 20.0,
+        "zoning_signal": 15.0,
+        "distance_from_mebane": 7.88
+      }
+    },
+    {
+      "parcel_id": "CAS-00805",
+      "title": "Yanceyville Outskirts 2.0 Acres (No Captured URL)",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 2.0,
+      "price": 25000.0,
+      "price_per_acre": 12500.0,
+      "primary_track": "CASH_TRACK",
+      "tracks": [
+        "CASH_TRACK"
+      ],
+      "road_frontage": "Unknown",
+      "zoning": "Unzoned",
+      "distance_from_mebane_miles": null,
+      "coordinate_status": "COORDINATES_MISSING_NOT_IMPUTED",
+      "url": "URL not captured",
+      "url_status": "URL_NOT_CAPTURED",
+      "source": "caswell_tax_auction",
+      "score": 48.4,
+      "score_breakdown": {
+        "acreage_fit": 20.0,
+        "price_per_acre": 8.4,
+        "road_frontage": 5.0,
+        "zoning_signal": 15.0,
+        "distance_from_mebane": 0.0
+      }
+    }
+  ]
+}

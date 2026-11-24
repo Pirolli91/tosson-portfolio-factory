@@ -1,0 +1,10 @@
+RETAIL INSTALLMENT SALE CONTRACT — SIMPLE FINANCE CHARGE (SYNTHETIC TEST SAMPLE)
+
+1. PREPAYMENT: You may prepay all or part of the unpaid principal balance at any time.
+   Federal Truth-in-Lending Prepayment Disclosure: If you pay early, you will not have to pay a penalty.
+
+2. HOW WE FIGURE FINANCE CHARGE: We figure the Finance Charge on a daily basis at the Annual Percentage Rate
+   on the unpaid part of the Amount Financed (simple interest accrual).
+
+3. DEALER REBATE ADDENDUM (PLANTED TEST CLAUSE):
+   Borrower agrees to repay the dealer rebate if the loan is paid off within 90 days.

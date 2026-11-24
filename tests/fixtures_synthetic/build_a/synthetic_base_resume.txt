@@ -1,0 +1,12 @@
+Jordan Rivera
+Data Analyst — SQL Data Modeling • BI Dashboards • Python Automation
+Raleigh, NC • U.S. Legal Permanent Resident (work-authorized, no sponsorship required)
+
+EXPERIENCE
+Data Analyst | Piedmont Regional Analytics | Remote | 2023 – Present
+- Write SQL queries and build Tableau and Power BI dashboards for operational and leadership reporting.
+- Maintain documented metric definitions and automated data quality validation checks.
+- Build Python pipelines and Excel workbooks maintained under Git/GitHub version control.
+
+Independent Environmental Data Analyst | Synthetic Demo Practice | 2024 – Present
+- Modeled public EPA UCMR 5 PFAS occurrence screening datasets against 2024 MCL screening benchmarks.

@@ -1,0 +1,214 @@
+# Curated Skill & Claim Taxonomy for A5 (Packet Claim-Verifier) and A6 (JD Gap Analyser)
+version: "1.0.0"
+
+# Honest-candor / negation / disavowal phrases: if one appears in the same clause
+# near a skill mention, the verifier classifies the mention as DISAVOWED_HONEST_GAP
+# instead of treating it as a positive unsupported claim.
+disavowal_patterns:
+  - '(?i)\brather\s+than\b'
+  - '(?i)\binstead\s+of\b'
+  - '(?i)\bhave\s+not\s+(?:worked|used|built|administered|deployed|managed)\b'
+  - '(?i)\bhaven''t\s+(?:worked|used|built|administered|deployed|managed)\b'
+  - '(?i)\bnot\s+(?:yet\s+)?(?:worked|experienced|familiar|proficient)\s+with\b'
+  - '(?i)\bno\s+(?:direct\s+)?(?:experience|background|exposure)\s+(?:with|in)\b'
+  - '(?i)\bwould\s+be\s+new\s+ground\b'
+  - '(?i)\bdo\s+not\s+(?:claim|have|use|want\s+the\s+resume\s+to\s+imply)\b'
+  - '(?i)\bdon''t\s+(?:claim|have|use)\b'
+  - '(?i)\boutside\s+my\s+(?:current\s+)?(?:stack|experience)\b'
+  - '(?i)\bhave\s+not\s+been\s+part\s+of\s+my\b'
+  - '(?i)\bnot\s+part\s+of\s+my\s+(?:stack|background|work)\b'
+  - '(?i)\bcomparable\s+to\b'
+  - '(?i)\b-comparable\b'
+  - '(?i)\bnot\s+executed\s+against\b'
+  - '(?i)\bdialect-only\b'
+
+skills:
+  - canonical: "SQL"
+    category: "data_engineering"
+    aliases:
+      - '\bsql\b'
+      - '\bstructured\s+query\s+language\b'
+      - '\bsql\s+data\s+modeling\b'
+      - '\bwindow\s+functions?\b'
+      - '\bctes?\b'
+  - canonical: "Python"
+    category: "programming"
+    aliases:
+      - '\bpython\b'
+      - '\bscikit-learn\b'
+      - '\bpandas\b'
+  - canonical: "R"
+    category: "programming"
+    aliases:
+      - '(?<![a-zA-Z0-9_/])R(?![a-zA-Z0-9_/-])(?=\s*[,;/&)]|\s+programming|\s+studio)'
+      - '\br\s+programming\b'
+      - '\brstudio\b'
+  - canonical: "SAS"
+    category: "analytics"
+    aliases:
+      - '\bsas\b'
+  - canonical: "dbt"
+    category: "data_engineering"
+    aliases:
+      - '\bdbt\b'
+      - '\bdbt-core\b'
+      - '\bdbt\s+core\b'
+      - '\bdbt-duckdb\b'
+  - canonical: "Apache Airflow"
+    category: "orchestration"
+    aliases:
+      - '\bapache\s+airflow\b'
+      - '\bairflow\b'
+  - canonical: "DuckDB"
+    category: "data_warehouse"
+    aliases:
+      - '\bduckdb\b'
+  - canonical: "Snowflake-dialect SQL"
+    category: "data_warehouse"
+    aliases:
+      - '\bsnowflake-dialect\s+sql\b'
+      - '\bsnowflake\s+dialect\b'
+  - canonical: "Snowflake"
+    category: "data_warehouse"
+    aliases:
+      - '\bsnowflake\b'
+  - canonical: "Power BI"
+    category: "bi_visualization"
+    aliases:
+      - '\bpower\s*bi\b'
+      - '\bdax\b'
+      - '\bsemantic\s+model(?:ing|ling)?\b'
+  - canonical: "Tableau"
+    category: "bi_visualization"
+    aliases:
+      - '\btableau\b'
+  - canonical: "Metabase"
+    category: "bi_visualization"
+    aliases:
+      - '\bmetabase\b'
+  - canonical: "Looker"
+    category: "bi_visualization"
+    aliases:
+      - '\blooker\b'
+      - '\blookml\b'
+  - canonical: "Excel"
+    category: "analytics"
+    aliases:
+      - '\bexcel\b'
+      - '\bmicrosoft\s+excel\b'
+  - canonical: "Amplitude"
+    category: "analytics"
+    aliases:
+      - '\bamplitude\b'
+  - canonical: "Git / GitHub"
+    category: "engineering_practices"
+    aliases:
+      - '\bgit/github\b'
+      - '\bgithub\b'
+      - '\bgit\b'
+      - '\bversion\s+control\b'
+  - canonical: "Data Quality & Validation"
+    category: "data_governance"
+    aliases:
+      - '\bdata\s+quality\b'
+      - '\bvalidation\b'
+      - '\bquality-audit\b'
+      - '\breconciliation\b'
+      - '\bmetric\s+definitions?\b'
+  - canonical: "Machine Learning"
+    category: "data_science"
+    aliases:
+      - '\bmachine\s+learning\b'
+      - '\bpredictive\s+model(?:s|ing)?\b'
+  - canonical: "EPA UCMR 5 / PFAS Analytics"
+    category: "environmental_domain"
+    aliases:
+      - '\bucmr\s*5\b'
+      - '\bpfas\b'
+      - '\bepa\s+echo\b'
+      - '\busgs\s+water\s+quality\s+portal\b'
+  - canonical: "EDI / X12"
+    category: "healthcare_domain"
+    aliases:
+      - '\bedi\b'
+      - '\bx12\b'
+      - '\b837\b'
+      - '\b835\b'
+      - '\b834\b'
+  - canonical: "HEDIS / Healthcare Claims"
+    category: "healthcare_domain"
+    aliases:
+      - '\bhedis\b'
+      - '\bmedicaid\b'
+      - '\bmedicare\b'
+      - '\bencounters?\b'
+      - '\bhipaa\b'
+      - '\bicd-10\b'
+      - '\bcpt\s+codes?\b'
+  - canonical: "Spark / Databricks"
+    category: "big_data"
+    aliases:
+      - '\bapache\s+spark\b'
+      - '\bpyspark\b'
+      - '\bdatabricks\b'
+  - canonical: "AWS"
+    category: "cloud"
+    aliases:
+      - '\baws\b'
+      - '\bamazon\s+web\s+services\b'
+      - '\bredshift\b'
+      - '\bs3\b'
+  - canonical: "Azure"
+    category: "cloud"
+    aliases:
+      - '\bazure\b'
+      - '\bsynapse\b'
+      - '\bazure\s+data\s+factory\b'
+  - canonical: "GCP / BigQuery"
+    category: "cloud"
+    aliases:
+      - '\bgcp\b'
+      - '\bgoogle\s+cloud\b'
+      - '\bbigquery\b'
+  - canonical: "Kubernetes"
+    category: "infrastructure"
+    aliases:
+      - '\bkubernetes\b'
+      - '\bk8s\b'
+  - canonical: "Terraform"
+    category: "infrastructure"
+    aliases:
+      - '\bterraform\b'
+  - canonical: "Docker"
+    category: "infrastructure"
+    aliases:
+      - '\bdocker\b'
+  - canonical: "ESG / GHG / Sustainability Reporting"
+    category: "sustainability_domain"
+    aliases:
+      - '\besg\b'
+      - '\bghg\b'
+      - '\bscope\s+[123]\b'
+      - '\bcsrd\b'
+      - '\bgri\b'
+      - '\bsasb\b'
+      - '\btcfd\b'
+      - '\bissb\b'
+      - '\blca\b'
+      - '\blife\s+cycle\s+assessment\b'
+      - '\bcarbon\s+accounting\b'
+  - canonical: "Lean Six Sigma"
+    category: "process_improvement"
+    aliases:
+      - '\blean\s+six\s+sigma\b'
+      - '\bsix\s+sigma\b'
+  - canonical: "Agile"
+    category: "process_improvement"
+    aliases:
+      - '\bagile\b'
+      - '\bscrum\b'
+  - canonical: "Generative AI"
+    category: "ai_productivity"
+    aliases:
+      - '\bgenerative\s+ai\b'
+      - '\bllm(?:s)?\b'

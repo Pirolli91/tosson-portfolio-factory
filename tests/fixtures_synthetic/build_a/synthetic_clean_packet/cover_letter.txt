@@ -1,0 +1,7 @@
+Jordan Rivera — Application Cover Letter
+Dear Hiring Team,
+I bring hands-on SQL, Python, Tableau, Power BI, and Excel analytics experience, plus a public EPA UCMR 5 PFAS occurrence screening warehouse built in dbt, DuckDB, and Apache Airflow and versioned in Git/GitHub. I also translated warehouse models into Snowflake-dialect SQL (dialect-only; not executed against a Snowflake account).
+
+One point of candor: my data stack is SQL, Python, dbt, and Apache Airflow rather than Kubernetes and Terraform. I have not worked with HEDIS or EDI X12 claims pipelines, and Metabase would be new ground for me, though my Tableau and Power BI practice is directly transferable.
+
+I am a U.S. Legal Permanent Resident authorized to work without sponsorship.

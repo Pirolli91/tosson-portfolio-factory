@@ -1,0 +1,6 @@
+# Sprint 5 Isolated Airflow Environment (.venv-airflow) — Python 3.12
+# Install with:
+#   pip install -r requirements-airflow.txt --constraint https://raw.githubusercontent.com/apache/airflow/constraints-3.4.0/constraints-no-providers-3.12.txt
+apache-airflow==3.4.0
+apache-airflow-core==3.4.0
+apache-airflow-task-sdk==1.4.0

@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: mart_county_scorecard
+    description: >
+      North Carolina county-level EPA UCMR 5 PFAS occurrence and 2024 MCL / Hazard Index
+      screening scorecard. Strictly informational screening — never regulatory compliance claims.
+      Regulatory-status note (proposed / not final): all six 2024 EPA NPDWR benchmarks are
+      implemented; see project README for EPA / Federal Register citations.
+    columns:
+      - name: county_name
+        description: "Primary key: NC county served (or 'UNMAPPED_COUNTY')."
+        tests:
+          - not_null
+          - unique
+      - name: systems_monitored
+        description: "Distinct NC public water systems monitored in UCMR 5."
+        tests:
+          - not_null
+      - name: total_samples
+        description: "Total UCMR 5 analytical results in the county."
+        tests:
+          - not_null
+      - name: samples_above_mcl_benchmark
+        description: "Count of quantified detections exceeding a 2024 EPA individual MCL screening benchmark."
+        tests:
+          - not_null
+      - name: screening_summary_label
+        description: "Human-readable screening-only classification for county overview."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 'Above 2024 Screening Benchmark Observed'
+                  - 'PFAS Detected Below 2024 Screening Benchmarks'
+                  - 'No PFAS Detections (>= MRL)'
+
+  - name: mart_analyte_summary
+    description: >
+      Per-analyte EPA UCMR 5 occurrence and 2024 MCL screening summary across all
+      monitored NC contaminants (29 PFAS + lithium).
+    columns:
+      - name: contaminant
+        description: "Primary key: EPA UCMR 5 analyte name."
+        tests:
+          - not_null
+          - unique
+      - name: analyte_group
+        description: "Analyte group ('PFAS' or 'Lithium')."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['PFAS', 'Lithium']
+      - name: total_samples
+        description: "Total NC analytical results for this analyte."
+        tests:
+          - not_null
+
+  - name: mart_system_screening
+    description: >
+      Water-system-level (PWSID) occurrence summary vs all six 2024 EPA PFAS MCL and
+      Hazard Index screening benchmarks. Screening language strictly enforced.
+    columns:
+      - name: pwsid
+        description: "Primary key: NC Public Water System Identifier."
+        tests:
+          - not_null
+          - unique
+      - name: county_name
+        description: "Foreign key to mart_county_scorecard."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('mart_county_scorecard')
+                field: county_name
+      - name: screening_status
+        description: "Screening-only water system status classification."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 'Above Individual MCL & Hazard Index Screening Benchmarks'
+                  - 'Above 2024 Individual MCL Screening Benchmark'
+                  - 'Above 2024 Hazard Index Screening Benchmark (>1.0)'
+                  - 'PFAS Detected Below 2024 Screening Benchmarks'
+                  - 'Non-PFAS Analyte Detected Only'
+                  - 'No Detections (>= MRL)'

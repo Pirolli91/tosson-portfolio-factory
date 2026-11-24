@@ -1,0 +1,11 @@
+
+    
+    
+    truncate table "pfas_ucmr5"."main_seeds"."epa_2024_pfas_benchmarks";
+    -- dbt seed --
+    
+          COPY "pfas_ucmr5"."main_seeds"."epa_2024_pfas_benchmarks" FROM '/home/antigravity/portfolio-factory/pfas_warehouse/seeds/epa_2024_pfas_benchmarks.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  

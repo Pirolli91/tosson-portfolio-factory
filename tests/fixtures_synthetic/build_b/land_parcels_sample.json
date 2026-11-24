@@ -1,0 +1,137 @@
+{
+  "parcels": [
+    {
+      "parcel_id": "CAS-00412",
+      "title": "NC-86 Rural Wooded Tract",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 2.4,
+      "price": 4200,
+      "road_frontage": "Paved state road (SR 1152)",
+      "zoning": "RA (Rural Agricultural)",
+      "lat": 36.395,
+      "lon": -79.335,
+      "url": "https://caswellcountync.gov/tax-sales/parcels/CAS-00412",
+      "source": "caswell_tax_auction"
+    },
+    {
+      "parcel_id": "PER-01988",
+      "title": "Timberlake Road 3.5 Acre Lot",
+      "county": "Person County",
+      "state": "NC",
+      "acreage": 3.5,
+      "price": 22500,
+      "road_frontage": "Gravel deeded easement",
+      "zoning": "Rural Residential-Ag",
+      "lat": 36.285,
+      "lon": -78.965,
+      "url": "https://personcountync.gov/gis/parcel/PER-01988",
+      "source": "person_gis_public"
+    },
+    {
+      "parcel_id": "ROC-00771",
+      "title": "Reidsville Fringe 1.5 Acre Parcel",
+      "county": "Rockingham",
+      "state": "NC",
+      "acreage": 1.5,
+      "price": 18000,
+      "road_frontage": "Paved public road",
+      "zoning": "RA",
+      "lat": 36.355,
+      "lon": -79.665,
+      "url": "https://example-county.gov/search?q=rockingham+land",
+      "source": "rockingham_public_feed"
+    },
+    {
+      "parcel_id": "CAS-00805",
+      "title": "Yanceyville Outskirts 2.0 Acres (No Captured URL)",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 2.0,
+      "price": 25000,
+      "road_frontage": "Unknown",
+      "zoning": "Unzoned",
+      "lat": null,
+      "lon": null,
+      "url": "",
+      "source": "caswell_tax_auction"
+    },
+    {
+      "parcel_id": "CAS-BAD-NOPRICE",
+      "title": "Missing Price Parcel",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 2.5,
+      "price": null,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://caswellcountync.gov/tax-sales/parcels/CAS-BAD-NOPRICE"
+    },
+    {
+      "parcel_id": "PER-BAD-NOACRE",
+      "title": "Missing Acreage Parcel",
+      "county": "Person",
+      "state": "NC",
+      "acreage": "",
+      "price": 12000,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://personcountync.gov/gis/parcel/PER-BAD-NOACRE"
+    },
+    {
+      "parcel_id": "ROC-BAD-30K",
+      "title": "Exact $30,000 Boundary Parcel (Cash Track Is Strictly < $30k)",
+      "county": "Rockingham",
+      "state": "NC",
+      "acreage": 3.0,
+      "price": 30000,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://rockinghamcountync.gov/parcels/ROC-BAD-30K"
+    },
+    {
+      "parcel_id": "ALA-BAD-COUNTY",
+      "title": "Alamance County Out-of-Scope Parcel",
+      "county": "Alamance",
+      "state": "NC",
+      "acreage": 2.5,
+      "price": 19500,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://alamancecountync.gov/parcels/ALA-BAD-COUNTY"
+    },
+    {
+      "parcel_id": "CAS-BAD-SMALL",
+      "title": "Sub-1-Acre Lot",
+      "county": "Caswell",
+      "state": "NC",
+      "acreage": 0.75,
+      "price": 4500,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://caswellcountync.gov/tax-sales/parcels/CAS-BAD-SMALL"
+    },
+    {
+      "parcel_id": "PER-BAD-LARGE",
+      "title": "Oversized 6.2 Acre Tract",
+      "county": "Person",
+      "state": "NC",
+      "acreage": 6.2,
+      "price": 24000,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://personcountync.gov/gis/parcel/PER-BAD-LARGE"
+    },
+    {
+      "parcel_id": "VA-BAD-STATE",
+      "title": "Danville VA Border Tract",
+      "county": "Caswell",
+      "state": "VA",
+      "acreage": 2.0,
+      "price": 9000,
+      "road_frontage": "Paved",
+      "zoning": "RA",
+      "url": "https://example.gov/va/parcel/VA-BAD-STATE"
+    }
+  ]
+}

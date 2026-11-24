@@ -1,0 +1,16 @@
+{
+  "jd_id": "genworth-carescout-req-260438",
+  "company": "Genworth / CareScout",
+  "role_title": "Data Analyst",
+  "req_id": "REQ-260438",
+  "role_family": "Data Analyst",
+  "target_role_weight": 1.0,
+  "official_url": "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438",
+  "canonical_url": "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438",
+  "http_status": 429,
+  "captured_at_utc": "2026-11-24T00:28:07Z",
+  "status": "UNFETCHABLE_BOT_GATE",
+  "status_reason": "Official career page returned HTTP 429 (anti-bot or rate-limit gate; not bypassed).",
+  "text_length": 0,
+  "text": ""
+}

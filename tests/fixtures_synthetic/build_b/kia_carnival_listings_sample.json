@@ -1,0 +1,54 @@
+{
+  "listings": [
+    {
+      "listing_id": "CARN-001",
+      "vin": "KNDNC5H39R6300001",
+      "title": "2024 Kia Carnival EX 8-Passenger Minivan",
+      "description": "One-owner EX 8-passenger bench/slide-flex seating, clean title, SC266 completed.",
+      "price": 34800,
+      "mileage": 21400,
+      "url": "https://example-autos.invalid/listings/CARN-001",
+      "sc266_vin_status": "COMPLETED"
+    },
+    {
+      "listing_id": "CARN-002",
+      "vin": "KNDNE5H35P6200002",
+      "title": "2023 Kia Carnival SX Prestige — VIP Lounge Seat Package",
+      "description": "Loaded SX Prestige with 7-passenger reclining second-row VIP Lounge seating.",
+      "price": 37900,
+      "mileage": 29800,
+      "url": "https://example-autos.invalid/listings/CARN-002",
+      "sc266_vin_status": "COMPLETED"
+    },
+    {
+      "listing_id": "CARN-003",
+      "vin": "KNDNE5H31P6200003",
+      "title": "2023 Kia Carnival SX 8-Passenger",
+      "description": "8-passenger SX trim, dual power sliding doors.",
+      "price": 33500,
+      "mileage": 31200,
+      "url": "https://example-autos.invalid/listings/CARN-003",
+      "sc266_vin_status": "OPEN"
+    },
+    {
+      "listing_id": "CARN-004",
+      "vin": "KNDNC5H37N6100004",
+      "title": "2022 Kia Carnival EX",
+      "description": "Clean 2022 EX family van, 8 seats.",
+      "price": 28900,
+      "mileage": 44500,
+      "url": "https://example-autos.invalid/listings/CARN-004",
+      "sc266_vin_status": null
+    },
+    {
+      "listing_id": "OTHER-005",
+      "vin": "5FNRL6H78MB000005",
+      "title": "2021 Honda Odyssey EX-L",
+      "description": "Non-target vehicle for VIN validation negative test.",
+      "price": 26500,
+      "mileage": 52000,
+      "url": "https://example-autos.invalid/listings/OTHER-005",
+      "sc266_vin_status": null
+    }
+  ]
+}

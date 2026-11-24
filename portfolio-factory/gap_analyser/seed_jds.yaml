@@ -1,0 +1,28 @@
+# Seed JD corpus for Build A6 (official employer career pages ONLY — never aggregators).
+# Role weights follow Adjudicated Plan D10: Data Analyst = 1.0, Sustainability Consultant = 0.7.
+version: "1.0.0"
+
+seed_jds:
+  - jd_id: "centene-1672733-1"
+    company: "Centene Corporation"
+    role_title: "Data Analyst III"
+    req_id: "1672733-1"
+    role_family: "Data Analyst"
+    target_role_weight: 1.0
+    official_url: "https://jobs.centene.com/us/en/jobs/1672733-1/"
+
+  - jd_id: "genworth-carescout-req-260438"
+    company: "Genworth / CareScout"
+    role_title: "Data Analyst"
+    req_id: "REQ-260438"
+    role_family: "Data Analyst"
+    target_role_weight: 1.0
+    official_url: "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438"
+
+  - jd_id: "bureau-veritas-214408"
+    company: "Bureau Veritas"
+    role_title: "Senior Sustainability Consultant"
+    req_id: "214408"
+    role_family: "Sustainability Consultant"
+    target_role_weight: 0.7
+    official_url: "https://careers.bureauveritas.com/job/Senior-Sustainability-Consultant/214408-en_US/"

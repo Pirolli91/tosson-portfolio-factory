@@ -1,0 +1,61 @@
+{
+  "snapshot_ts": "2026-11-23T12:00:00Z",
+  "lots": [
+    {
+      "lot_id": "HB-1001",
+      "title": "Lot #1001: Ridgid 16 Gallon Wet Dry Shop Vacuum",
+      "category": "Tools",
+      "current_bid": 40.0,
+      "url": "https://hibid.com/lot/1001/ridgid-shop-vac",
+      "image_path": null
+    },
+    {
+      "lot_id": "HB-1002",
+      "title": "Lot #1002: Honda EU2200i Inverter Generator",
+      "category": "Tools",
+      "current_bid": 525.0,
+      "url": "https://hibid.com/lot/1002/honda-eu2200i",
+      "image_path": null
+    },
+    {
+      "lot_id": "HB-1003",
+      "title": "Lot #1003: Stihl MS 250 Chainsaw 18 Inch Bar",
+      "category": "Tools",
+      "current_bid": 150.0,
+      "url": "https://hibid.com/lot/1003/stihl-ms250",
+      "image_path": null
+    },
+    {
+      "lot_id": "HB-2004",
+      "title": "Lot #2004 - DeWalt 10-Inch Sliding Compound Miter Saw DWS779",
+      "category": "Tools",
+      "current_bid": 185.0,
+      "url": "https://hibid.com/lot/2004/dewalt-dws779-relist",
+      "image_path": "hibid_images/miter_saw_curr.png"
+    },
+    {
+      "lot_id": "HB-2005",
+      "title": "Lot #2005 - Werner 8 Foot Fiberglass Step Ladder 300 lb Capacity",
+      "category": "Tools",
+      "current_bid": 50.0,
+      "url": "https://hibid.com/lot/2005/werner-ladder-relist",
+      "image_path": null
+    },
+    {
+      "lot_id": "HB-2007",
+      "title": "Lot #2007: Bostitch 6 Gallon Pancake Air Compressor",
+      "category": "Tools",
+      "current_bid": 65.0,
+      "url": "https://hibid.com/lot/2007/bostitch-compressor",
+      "image_path": "hibid_images/compressor_new.png"
+    },
+    {
+      "lot_id": "HB-1099",
+      "title": "Lot #1099: Vintage Porcelain Advertising Sign",
+      "category": "Collectibles",
+      "current_bid": 90.0,
+      "url": "https://hibid.com/lot/1099/porcelain-sign",
+      "image_path": null
+    }
+  ]
+}

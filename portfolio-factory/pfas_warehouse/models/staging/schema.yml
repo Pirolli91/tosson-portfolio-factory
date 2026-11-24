@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: stg_ucmr5_results
+    description: >
+      Typed North Carolina EPA UCMR 5 analytical occurrence results with standardized
+      concentrations in both ug/L and ppt (ng/L). Screening data only.
+    columns:
+      - name: result_row_id
+        description: "Deterministic surrogate primary key from raw ingest row sequence."
+        tests:
+          - not_null
+          - unique
+      - name: pwsid
+        description: "EPA Public Water System Identifier (NC)."
+        tests:
+          - not_null
+      - name: state_code
+        description: "Two-letter state code (strictly NC)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['NC']
+      - name: contaminant
+        description: "EPA UCMR 5 analyte name (29 PFAS or lithium)."
+        tests:
+          - not_null
+      - name: analyte_group
+        description: "Analyte classification (PFAS or Lithium)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['PFAS', 'Lithium']
+      - name: analytical_results_sign
+        description: "EPA detection qualifier ('<' below MRL, '=' quantified detection)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['<', '=']
+      - name: is_detected
+        description: "TRUE when analytical_results_sign = '=' (>= MRL)."
+        tests:
+          - not_null
+      - name: collection_date
+        description: "Parsed sample collection date."
+        tests:
+          - not_null
+
+  - name: stg_pws_county_crosswalk
+    description: >
+      One row per NC Public Water System observed in UCMR 5, joined to EPA SDWIS county
+      geography with explicit 'UNMAPPED_COUNTY' fallback for any unmapped PWSID.
+    columns:
+      - name: pwsid
+        description: "Primary key: NC Public Water System Identifier."
+        tests:
+          - not_null
+          - unique
+      - name: county_name
+        description: "NC county served from EPA SDWIS, or 'UNMAPPED_COUNTY'."
+        tests:
+          - not_null
+
+  - name: stg_pfas_benchmarks
+    description: >
+      EPA 2024 NPDWR PFAS MCL and Hazard Index Health-Based Water Concentration (HBWC)
+      screening benchmarks (all six 2024 benchmarks implemented; proposed / not final
+      rescission rulemaking noted in documentation).
+    columns:
+      - name: contaminant
+        description: "Primary key: EPA UCMR 5 PFAS analyte name."
+        tests:
+          - not_null
+          - unique
+      - name: in_hazard_index
+        description: "TRUE for the four EPA Hazard Index mixture analytes (HFPO-DA, PFNA, PFHxS, PFBS)."
+        tests:
+          - not_null

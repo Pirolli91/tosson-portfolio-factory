@@ -1,0 +1,126 @@
+{
+  "generated_at_utc": "2026-11-24T00:28:09Z",
+  "legal_entity": "Tosson Services LLC dba Tosson Environmental Analytics",
+  "jds_total": 3,
+  "jds_open": 1,
+  "jds_closed": 0,
+  "jds_unfetchable_bot_gate": 2,
+  "seed_jds": [
+    {
+      "jd_id": "bureau-veritas-214408",
+      "company": "Bureau Veritas",
+      "role_title": "Senior Sustainability Consultant",
+      "req_id": "214408",
+      "target_role_weight": 0.7,
+      "official_url": "https://careers.bureauveritas.com/job/Senior-Sustainability-Consultant/214408-en_US/",
+      "canonical_url": "https://careers.bureauveritas.com/job/Senior-Sustainability-Consultant/214408-en_US/",
+      "http_status": 200,
+      "captured_at_utc": "2026-11-24T00:28:07Z",
+      "status": "OPEN",
+      "status_reason": "Captured live from official career page (HTTP 200).",
+      "skills_extracted": [
+        "ESG / GHG / Sustainability Reporting",
+        "Power BI",
+        "Python",
+        "R",
+        "SQL"
+      ]
+    },
+    {
+      "jd_id": "centene-1672733-1",
+      "company": "Centene Corporation",
+      "role_title": "Data Analyst III",
+      "req_id": "1672733-1",
+      "target_role_weight": 1.0,
+      "official_url": "https://jobs.centene.com/us/en/jobs/1672733-1/",
+      "canonical_url": "https://jobs.centene.com/us/en/jobs/1672733-1/",
+      "http_status": 403,
+      "captured_at_utc": "2026-11-24T00:28:07Z",
+      "status": "UNFETCHABLE_BOT_GATE",
+      "status_reason": "Official career page returned HTTP 403 (anti-bot or rate-limit gate; not bypassed).",
+      "skills_extracted": []
+    },
+    {
+      "jd_id": "genworth-carescout-req-260438",
+      "company": "Genworth / CareScout",
+      "role_title": "Data Analyst",
+      "req_id": "REQ-260438",
+      "target_role_weight": 1.0,
+      "official_url": "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438",
+      "canonical_url": "https://gnw.wd1.myworkdayjobs.com/en-US/GNW/job/Data-Analyst_REQ-260438",
+      "http_status": 429,
+      "captured_at_utc": "2026-11-24T00:28:07Z",
+      "status": "UNFETCHABLE_BOT_GATE",
+      "status_reason": "Official career page returned HTTP 429 (anti-bot or rate-limit gate; not bypassed).",
+      "skills_extracted": []
+    }
+  ],
+  "ranked_skills": [
+    {
+      "skill": "ESG / GHG / Sustainability Reporting",
+      "category": "sustainability_domain",
+      "frequency": 1,
+      "demand_score": 0.7,
+      "gap_score": 0.7,
+      "coverage_status": "TRUE_GAP",
+      "evidence": "Not present in proof-registry.json or base documents",
+      "jds": [
+        "bureau-veritas-214408"
+      ]
+    },
+    {
+      "skill": "R",
+      "category": "programming",
+      "frequency": 1,
+      "demand_score": 0.7,
+      "gap_score": 0.7,
+      "coverage_status": "TRUE_GAP",
+      "evidence": "Not present in proof-registry.json or base documents",
+      "jds": [
+        "bureau-veritas-214408"
+      ]
+    },
+    {
+      "skill": "Power BI",
+      "category": "bi_visualization",
+      "frequency": 1,
+      "demand_score": 0.7,
+      "gap_score": 0.0,
+      "coverage_status": "COVERED_BY_ARTIFACT",
+      "evidence": "a4c-powerbi-dax-semantic-model: Power BI (DAX measure library and star-schema semantic model specification; no .pbix in Sprint 5)",
+      "jds": [
+        "bureau-veritas-214408"
+      ]
+    },
+    {
+      "skill": "Python",
+      "category": "programming",
+      "frequency": 1,
+      "demand_score": 0.7,
+      "gap_score": 0.0,
+      "coverage_status": "COVERED_BY_ARTIFACT",
+      "evidence": "a1-epa-ucmr5-nc-ingest: Built repeatable Python + DuckDB ingestion pipeline for public EPA UCMR 5 North Carolina occurrence data with SHA-256 checksums and exact row reconciliation",
+      "jds": [
+        "bureau-veritas-214408"
+      ]
+    },
+    {
+      "skill": "SQL",
+      "category": "data_engineering",
+      "frequency": 1,
+      "demand_score": 0.7,
+      "gap_score": 0.0,
+      "coverage_status": "COVERED_BY_ARTIFACT",
+      "evidence": "a2-dbt-mart-analyte-summary: SQL",
+      "jds": [
+        "bureau-veritas-214408"
+      ]
+    }
+  ],
+  "summary": {
+    "total_unique_jd_skills": 5,
+    "covered_by_artifact": 3,
+    "covered_by_base_docs": 0,
+    "true_gaps": 2
+  }
+}

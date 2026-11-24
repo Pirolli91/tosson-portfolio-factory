@@ -1,0 +1,16 @@
+{
+  "jd_id": "centene-1672733-1",
+  "company": "Centene Corporation",
+  "role_title": "Data Analyst III",
+  "req_id": "1672733-1",
+  "role_family": "Data Analyst",
+  "target_role_weight": 1.0,
+  "official_url": "https://jobs.centene.com/us/en/jobs/1672733-1/",
+  "canonical_url": "https://jobs.centene.com/us/en/jobs/1672733-1/",
+  "http_status": 403,
+  "captured_at_utc": "2026-11-24T00:28:07Z",
+  "status": "UNFETCHABLE_BOT_GATE",
+  "status_reason": "Official career page returned HTTP 403 (anti-bot or rate-limit gate; not bypassed).",
+  "text_length": 0,
+  "text": ""
+}
